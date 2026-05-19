@@ -31,7 +31,7 @@ public class Insert extends javax.swing.JDialog {
         initComponents();
         
         //El #1 Modificar texto para subir la foto 
-        photo.setText("<html><center>Deja tu archivo aquí</center><center>PHOTO</center><br><center><i>Supported format: PNG</i></center><br><center><i>Max size 64KB</i></center></html>");
+        photo.setText("<html><center>Deja tu archivo aquí</center><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max size 64KB</i></center></html>");
         
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
