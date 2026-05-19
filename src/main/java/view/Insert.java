@@ -29,6 +29,17 @@ public class Insert extends javax.swing.JDialog {
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //esto es del #1
+        photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max. size 64KB</i></center></html>");
+        
+        //Solución #4 
+        //Cambiamos el boton para que: salga Seleccionar una fecha 
+        javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
+        btnCalendario.setText("Seleccionar una fecha");
+        //El tamaño, quitamos los limites que hay puestos 
+        btnCalendario.setMaximumSize(null);
+        btnCalendario.setPreferredSize(null);       
+        
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
         insert.setEnabled(false);
