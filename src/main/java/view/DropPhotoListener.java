@@ -24,8 +24,7 @@ public class DropPhotoListener implements DropTargetListener {
 
     JDialog jDialog;
     JLabel label;
-    String dragText = "<html><center>PHOTO</center></br><br><center> <i>Supported format: PNG.</i></center></br><br><center><i>Max. size 64KB</i></center></html>";
-
+    String dragText = "<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max size 64KB</i></center></html>";
     public DropPhotoListener(JLabel label, JDialog jDialog) {
         this.label = label;
         this.jDialog = jDialog;
