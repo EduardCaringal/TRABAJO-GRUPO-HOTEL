@@ -30,6 +30,19 @@ public class Insert extends javax.swing.JDialog {
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        //esto es del #1
+        photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max. size 64KB</i></center></html>");
+        
+        //Solución #4 
+        //Cambiamos el boton para que: salga Seleccionar una fecha 
+        javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
+        btnCalendario.setText("Seleccionar una fecha");
+        
+        //El tamaño, quitamos los limites que hay puestos 
+        btnCalendario.setMaximumSize(null);
+        btnCalendario.setPreferredSize(null);       
+        
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
         insert.setEnabled(false);
@@ -165,7 +178,7 @@ public class Insert extends javax.swing.JDialog {
         photo.setBackground(new java.awt.Color(255, 255, 255));
         photo.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        photo.setText("<html><center>PHOTO</center></br><br><center> <i>Supported format: PNG.</i></center></br><br><center><i>Max. size 64KB</i></center></html>");
+        photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max size 64KB</i></center></html>");
         photo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         photo.setMaximumSize(new java.awt.Dimension(150, 135));
         photo.setMinimumSize(new java.awt.Dimension(150, 135));
