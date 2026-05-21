@@ -43,6 +43,7 @@ public class Insert extends javax.swing.JDialog {
         btnCalendario.setMaximumSize(null);
         btnCalendario.setPreferredSize(null);       
         
+        
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
         insert.setEnabled(false);
