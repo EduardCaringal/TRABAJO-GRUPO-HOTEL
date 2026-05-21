@@ -275,6 +275,7 @@ public class ControllerImplementation implements IController, ActionListener {
         if (delete != null) {
             Person p = new Person(delete.getNif().getText());
             delete(p);
+
             delete.getReset().doClick();
         }
     }
@@ -324,6 +325,10 @@ public class ControllerImplementation implements IController, ActionListener {
                 p.setPhoto((ImageIcon) update.getPhoto().getIcon());
             }
             update(p);
+            
+            //mensaje de actualización exitosa 
+            JOptionPane.showMessageDialog(update, "Person updated succesfully!");
+
             update.getReset().doClick();
         }
     }
@@ -358,21 +363,23 @@ public class ControllerImplementation implements IController, ActionListener {
         Object[] options = {"Yes", "No"};
         //int answer = JOptionPane.showConfirmDialog(menu, "Are you sure to delete all people registered?", "Delete All - People v1.1.0", 0, 0);
         int answer = JOptionPane.showOptionDialog(
-        menu,
-        "Are you sure you want to delete all registered people?", 
-        "Delete All - People v1.1.0",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE,
-        null,
-        options,
-        options[1] // Default selection is "No"
-    );
+                menu,
+                "Are you sure you want to delete all registered people?",
+                "Delete All - People v1.1.0",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                options,
+                options[1] // Default selection is "No"
+        );
+        //añadir mensaje de que la persona se ha eliminado con exito
+        JOptionPane.showMessageDialog(delete, "All persons have been deleted successfully");
 
         if (answer == 0) {
             deleteAll();
         }
     }
-    
+
     /**
      * This function inserts the Person object with the requested NIF, if it
      * doesn't exist. If there is any access problem with the storage device,
@@ -439,7 +446,11 @@ public class ControllerImplementation implements IController, ActionListener {
     public void delete(Person p) {
         try {
             if (dao.read(p) != null) {
-                dao.delete(p);
+                int opc = JOptionPane.showConfirmDialog(delete, "Are you sure you want to delete this person?");
+                if(opc == javax.swing.JOptionPane.YES_NO_OPTION){
+                    dao.delete(p);
+                JOptionPane.showMessageDialog(delete, "Person deleted successfully!" , delete.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
                 throw new PersonException(p.getNif() + " is not registered and can not "
                         + "be DELETED");

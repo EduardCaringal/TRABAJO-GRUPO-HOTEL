@@ -19,8 +19,9 @@ import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
 
 /**
- * Interface used to register a person. It is mandatory to enter at least the 
+ * Interface used to register a person. It is mandatory to enter at least the
  * NIF and the name.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -29,9 +30,24 @@ public class Insert extends javax.swing.JDialog {
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        //esto es del #1
+        photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max. size 64KB</i></center></html>");
+        
+        //Solución #4 
+        //Cambiamos el boton para que: salga Seleccionar una fecha 
+        javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
+        btnCalendario.setText("Seleccionar una fecha");
+        
+        //El tamaño, quitamos los limites que hay puestos 
+        btnCalendario.setMaximumSize(null);
+        btnCalendario.setPreferredSize(null);       
+        
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
         insert.setEnabled(false);
+        setPlaceholder(nif, "Enter NIF number, letter is calculated (e.g., 12345678)");
+        setPlaceholder(name, "Enter full name");
     }
 
     public JButton getReset() {
@@ -47,6 +63,7 @@ public class Insert extends javax.swing.JDialog {
     }
 
     public JDatePicker getDateOfBirth() {
+
         return dateOfBirth;
     }
 
@@ -117,6 +134,11 @@ public class Insert extends javax.swing.JDialog {
         name.setMaximumSize(new java.awt.Dimension(400, 22));
         name.setMinimumSize(new java.awt.Dimension(400, 22));
         name.setPreferredSize(new java.awt.Dimension(400, 22));
+        name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameActionPerformed(evt);
+            }
+        });
         name.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 nameKeyReleased(evt);
@@ -156,7 +178,7 @@ public class Insert extends javax.swing.JDialog {
         photo.setBackground(new java.awt.Color(255, 255, 255));
         photo.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        photo.setText("<html><center>PHOTO</center></br><br><center> <i>Supported format: PNG.</i></center></br><br><center><i>Max. size 64KB</i></center></html>");
+        photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max size 64KB</i></center></html>");
         photo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         photo.setMaximumSize(new java.awt.Dimension(150, 135));
         photo.setMinimumSize(new java.awt.Dimension(150, 135));
@@ -188,9 +210,15 @@ public class Insert extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(24, 12, 12, 12);
         getContentPane().add(jLabel5, gridBagConstraints);
 
+        nif.setToolTipText("Enter NIF number, letter is calculated (e.g., 12345678)");
         nif.setMaximumSize(new java.awt.Dimension(400, 22));
         nif.setMinimumSize(new java.awt.Dimension(400, 22));
         nif.setPreferredSize(new java.awt.Dimension(400, 22));
+        nif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nifActionPerformed(evt);
+            }
+        });
         nif.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nifKeyPressed(evt);
@@ -250,8 +278,14 @@ public class Insert extends javax.swing.JDialog {
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         nif.setEditable(true);
-        nif.setText("");
-        name.setText("");
+        nif.setEditable(true);
+
+        //cuando pulse reset vuelvan a aparecer
+        nif.setForeground(java.awt.Color.GRAY);
+        nif.setText("Enter NIF number, letter is calculated (e.g., 12345678)");
+        name.setForeground(java.awt.Color.GRAY);
+        name.setText("Enter full name");
+
         photo.setIcon(null);
         //We reset the calendar date to the current date ...
         LocalDate dateLocate = LocalDate.now();
