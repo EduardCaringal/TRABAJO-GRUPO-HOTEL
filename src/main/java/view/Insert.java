@@ -37,6 +37,7 @@ public class Insert extends javax.swing.JDialog {
         //Cambiamos el boton para que: salga Seleccionar una fecha 
         javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
         btnCalendario.setText("Seleccionar una fecha");
+        
         //El tamaño, quitamos los limites que hay puestos 
         btnCalendario.setMaximumSize(null);
         btnCalendario.setPreferredSize(null);       
