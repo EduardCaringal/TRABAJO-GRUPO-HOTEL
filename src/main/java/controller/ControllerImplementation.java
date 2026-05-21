@@ -17,7 +17,7 @@ import view.Menu;
 import view.Read;
 import view.ReadAll;
 import view.Update;
-
+import view.Count;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -58,7 +58,7 @@ public class ControllerImplementation implements IController, ActionListener {
     private Delete delete;
     private Update update;
     private ReadAll readAll;
-
+    private Count count;
     /**
      * This constructor allows the controller to know which data storage option
      * the user has chosen.Schedule an event to deploy when the user has made
@@ -112,7 +112,9 @@ public class ControllerImplementation implements IController, ActionListener {
             handleReadAll();
         } else if (e.getSource() == menu.getDeleteAll()) {
             handleDeleteAll();
-        }
+        }  else if (e.getSource() == menu.getCount()) {
+    handleCount();
+}
     }
 
     private void handleDataStorageSelection() {
@@ -217,6 +219,7 @@ public class ControllerImplementation implements IController, ActionListener {
         menu.getDelete().addActionListener(this);
         menu.getReadAll().addActionListener(this);
         menu.getDeleteAll().addActionListener(this);
+        menu.getCount().addActionListener(this);
     }
 
     private void handleInsertAction() {
@@ -526,5 +529,10 @@ public class ControllerImplementation implements IController, ActionListener {
             }
         }
     }
-
+private void handleCount() {
+    count = new Count();
+    int total = readAll().size();
+    count.getLabelCount().setText(String.valueOf(total));
+    count.setVisible(true);
+}
 }
