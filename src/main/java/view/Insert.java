@@ -29,6 +29,7 @@ private org.jdatepicker.JDatePicker dateOfBirth;
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        dateOfBirth = new org.jdatepicker.JDatePicker();
         
         //esto es del #1
         photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max. size 64KB</i></center></html>");
@@ -276,6 +277,7 @@ private org.jdatepicker.JDatePicker dateOfBirth;
         dateModel.setValue(calendar);
         //... but do not display it in the JDatePicker box
         dateOfBirth.getModel().setValue(null);
+        
         insert.setEnabled(false);
     }//GEN-LAST:event_resetActionPerformed
 
