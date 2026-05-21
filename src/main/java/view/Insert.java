@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
-
 /**
  * Interface used to register a person. It is mandatory to enter at least the 
  * NIF and the name.
@@ -25,6 +24,7 @@ import org.jdatepicker.JDatePicker;
  * @version 1.1.0
  */
 public class Insert extends javax.swing.JDialog {
+private org.jdatepicker.JDatePicker dateOfBirth;
 
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
