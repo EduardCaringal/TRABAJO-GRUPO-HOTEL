@@ -342,36 +342,10 @@ public class Insert extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_nifKeyPressed
 
-    private void nifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nifActionPerformed
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_nifActionPerformed
-
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_nameActionPerformed
-
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_insertActionPerformed
-    private void setPlaceholder(JTextField field, String placeholder) { //declaro el placeholder
 
-        field.setForeground(java.awt.Color.GRAY);//pone el texto en gris
-
-        field.setText(placeholder);//escribe el texto placeholder dentro del cuadro
-
-        field.addFocusListener(new java.awt.event.FocusAdapter() { //aqui de añades un escuchador que detectara cuando el usuario haga clic
-
-            public void focusGained(java.awt.event.FocusEvent e) {
-                if (field.getText().equals(placeholder)) { //si el texto esta en el placeholder borra el mensaje ya puesto
-                    field.setText(""); //lo borra
-                    field.setForeground(java.awt.Color.BLACK); //cambia el color a negro 
-                }
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton insert;
     private javax.swing.JLabel jLabel1;

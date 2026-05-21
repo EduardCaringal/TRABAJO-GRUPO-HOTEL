@@ -391,7 +391,8 @@ public class ControllerImplementation implements IController, ActionListener {
     public void insert(Person p) {
         try {
             if (dao.read(p) == null) {
-                dao.insert(p);                
+                dao.insert(p);
+                JOptionPane.showMessageDialog(insert, "Person inserted successfully!", insert.getTitle(),JOptionPane.INFORMATION_MESSAGE );
             } else {
                 throw new PersonException(p.getNif() + " is registered and can not "
                         + "be INSERTED.");
