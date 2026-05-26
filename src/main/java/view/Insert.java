@@ -24,7 +24,6 @@ import org.jdatepicker.JDatePicker;
  * @version 1.1.0
  */
 public class Insert extends javax.swing.JDialog {
-private org.jdatepicker.JDatePicker dateOfBirth;
 
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
