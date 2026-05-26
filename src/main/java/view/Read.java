@@ -18,6 +18,7 @@ import org.jdatepicker.JDatePicker;
 
 /**
  * Interface used to read a person. It is mandatory to enter the NIF.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -26,6 +27,45 @@ public class Read extends javax.swing.JDialog {
     public Read(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        //esto es lo del PLACEHOLDER mejorado#3
+        nif.setForeground(java.awt.Color.GRAY); //poner el color en gris
+        nif.setText("e.g., 12345678"); //mensaje que aprece dentro del placeholder
+        nif.addFocusListener(new java.awt.event.FocusAdapter() { //Esto sirva para que detecte cuando hagan click dentro o fuera
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (nif.getText().equals("e.g., 12345678")) {
+                    nif.setText(""); // setea 
+                    nif.setForeground(java.awt.Color.BLACK); //lo vuelve color negro porque ya son los datos que pondra el usuario
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (nif.getText().isEmpty()) {
+                    nif.setText("e.g., 12345678");
+                    nif.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
+        //Aplico lo mismo para el name 
+        name.setForeground(java.awt.Color.GRAY);
+        name.setText("Enter full name");
+        name.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (name.getText().equals("Enter full name")) {
+                    name.setText("");
+                    name.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (name.getText().isEmpty()) {
+                    name.setText("Enter full name");
+                    name.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
         read.setVisible(false);
     }
 
