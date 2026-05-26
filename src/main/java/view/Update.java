@@ -20,6 +20,7 @@ import org.jdatepicker.JDatePicker;
 
 /**
  * Interface used to updated a person. It is mandatory to enter the NIF.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -28,6 +29,45 @@ public class Update extends javax.swing.JDialog {
     public Update(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        //esto es lo del PLACEHOLDER mejorado#3
+        nif.setForeground(java.awt.Color.GRAY); //poner el color en gris
+        nif.setText("e.g., 12345678"); //mensaje que aprece dentro del placeholder
+        nif.addFocusListener(new java.awt.event.FocusAdapter() { //Esto sirva para que detecte cuando hagan click dentro o fuera
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (nif.getText().equals("e.g., 12345678")) {
+                    nif.setText(""); // setea 
+                    nif.setForeground(java.awt.Color.BLACK); //lo vuelve color negro porque ya son los datos que pondra el usuario
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (nif.getText().isEmpty()) {
+                    nif.setText("e.g., 12345678");
+                    nif.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
+        //Aplico lo mismo para el name 
+        name.setForeground(java.awt.Color.GRAY);
+        name.setText("Enter full name");
+        name.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (name.getText().equals("Enter full name")) {
+                    name.setText("");
+                    name.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (name.getText().isEmpty()) {
+                    name.setText("Enter full name");
+                    name.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
         setLocationRelativeTo(null);
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
@@ -267,7 +307,7 @@ public class Update extends javax.swing.JDialog {
         if (nif.getText().length() == 8) {
             evt.consume();
             nif.setText(calculateNifLetter(nif.getText()));
-            nif.setEditable(false);  
+            nif.setEditable(false);
             read.doClick();
         }
     }//GEN-LAST:event_nifKeyPressed
@@ -292,7 +332,7 @@ public class Update extends javax.swing.JDialog {
         nif.setText("");
         name.setText("");
         dateOfBirth.getModel().setValue(null);
-        photo.setIcon(null); 
+        photo.setIcon(null);
         name.setEnabled(false);
         photo.setEnabled(false);
         //We reset the calendar date to the current date ...
@@ -325,7 +365,7 @@ public class Update extends javax.swing.JDialog {
     private void nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameKeyReleased
         if (name.getText().length() == 0) {
             update.setEnabled(false);
-        }else if(!nif.getText().isEmpty()){
+        } else if (!nif.getText().isEmpty()) {
             update.setEnabled(true);
         }
     }//GEN-LAST:event_nameKeyReleased

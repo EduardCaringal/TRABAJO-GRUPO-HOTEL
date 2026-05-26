@@ -23,6 +23,8 @@ public class Login extends javax.swing.JFrame {
         // Enmascarar el campo de contraseña
         jPasswordField1.setEchoChar('•');
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
