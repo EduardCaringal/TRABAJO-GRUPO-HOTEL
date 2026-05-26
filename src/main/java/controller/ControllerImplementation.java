@@ -37,6 +37,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdatepicker.DateModel;
+import view.Login;
 
 /**
  * This class starts the visual part of the application and programs and manages
@@ -58,6 +59,9 @@ public class ControllerImplementation implements IController, ActionListener {
     private Delete delete;
     private Update update;
     private ReadAll readAll;
+
+    //campo LOGIN
+    private Login login;
 
     /**
      * This constructor allows the controller to know which data storage option
@@ -90,27 +94,48 @@ public class ControllerImplementation implements IController, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == dSS.getAccept()[0]) {
             handleDataStorageSelection();
-        } else if (e.getSource() == menu.getInsert()) {
+        } else if (login != null && e.getSource() == login.getLoginButton()) {
+            // Compruebo si el boton LOGIN ha sido pulsado
+            // Si el usuario es admin y la contraseña es admin123 -> login correcto
+            if (login.getUsername().equals("admin") && login.getPassword().equals("admin123")) {
+                // Muestro el dialogo de login exitoso
+                javax.swing.JOptionPane.showMessageDialog(
+                        login,
+                        "Login successful.",
+                        "Login - People v1.1.0",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE
+                );
+                // Cierro el login y abro el menu principal
+                login.dispose();
+                setupMenu();
+            } else {
+                // Si son incorrectos muestro el mensaje de error en rojo
+                login.showError("Invalid username or password.");
+            }
+        } else if (login != null && e.getSource() == login.getResetButton()) {
+            // Si pulso RESET limpio los campos de usuario y contraseña
+            login.clearFields();
+        } else if (menu != null && e.getSource() == menu.getInsert()) {
             handleInsertAction();
         } else if (insert != null && e.getSource() == insert.getInsert()) {
             handleInsertPerson();
-        } else if (e.getSource() == menu.getRead()) {
+        } else if (menu != null && e.getSource() == menu.getRead()) {
             handleReadAction();
         } else if (read != null && e.getSource() == read.getRead()) {
             handleReadPerson();
-        } else if (e.getSource() == menu.getDelete()) {
+        } else if (menu != null && e.getSource() == menu.getDelete()) {
             handleDeleteAction();
         } else if (delete != null && e.getSource() == delete.getDelete()) {
             handleDeletePerson();
-        } else if (e.getSource() == menu.getUpdate()) {
+        } else if (menu != null && e.getSource() == menu.getUpdate()) {
             handleUpdateAction();
         } else if (update != null && e.getSource() == update.getRead()) {
             handleReadForUpdate();
         } else if (update != null && e.getSource() == update.getUpdate()) {
             handleUpdatePerson();
-        } else if (e.getSource() == menu.getReadAll()) {
+        } else if (menu != null && e.getSource() == menu.getReadAll()) {
             handleReadAll();
-        } else if (e.getSource() == menu.getDeleteAll()) {
+        } else if (menu != null && e.getSource() == menu.getDeleteAll()) {
             handleDeleteAll();
         }
     }
@@ -138,7 +163,9 @@ public class ControllerImplementation implements IController, ActionListener {
                 setupJPADatabase();
                 break;
         }
-        setupMenu();
+
+        //metodo añadido y reemplazo de ir a Menu a ir al Login
+        setupLogin();
     }
 
     private void setupFileStorage() {
@@ -206,6 +233,22 @@ public class ControllerImplementation implements IController, ActionListener {
             System.exit(0);
         }
         dao = new DAOJPA();
+    }
+
+    private void setupLogin() {
+        login = new Login();
+
+        login.getLoginButton().addActionListener(this);
+
+        login.getResetButton().addActionListener(this);
+
+        login.setVisible(true);
+    }
+
+    private boolean validateLogin(String username, String password) {
+
+        // Credenciales válidas para mejorar la lista 
+        return username.equals("admin") && password.equals("admin123");
     }
 
     private void setupMenu() {
@@ -325,7 +368,7 @@ public class ControllerImplementation implements IController, ActionListener {
                 p.setPhoto((ImageIcon) update.getPhoto().getIcon());
             }
             update(p);
-            
+
             //mensaje de actualización exitosa 
             JOptionPane.showMessageDialog(update, "Person updated succesfully!");
 
@@ -376,6 +419,7 @@ public class ControllerImplementation implements IController, ActionListener {
         JOptionPane.showMessageDialog(delete, "All persons have been deleted successfully");
 
         if (answer == 0) {
+
             deleteAll();
         }
     }
