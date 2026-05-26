@@ -112,6 +112,9 @@ public class ControllerImplementation implements IController, ActionListener {
             handleReadAll();
         } else if (e.getSource() == menu.getDeleteAll()) {
             handleDeleteAll();
+        } else if (read != null && e.getSource() == read.getDateOfBirth().getButton()) {
+            
+        } else if (update != null && e.getSource() == update.getDateOfBirth().getButton()) {
         }
     }
 
@@ -240,6 +243,7 @@ public class ControllerImplementation implements IController, ActionListener {
     private void handleReadAction() {
         read = new Read(menu, true);
         read.getRead().addActionListener(this);
+        ((javax.swing.JButton) read.getDateOfBirth().getButton()).addActionListener(this);
         read.setVisible(true);
     }
 
@@ -282,7 +286,10 @@ public class ControllerImplementation implements IController, ActionListener {
     public void handleUpdateAction() {
         update = new Update(menu, true);
         update.getUpdate().addActionListener(this);
+        update.getReset().addActionListener(this);
         update.getRead().addActionListener(this);
+        ((javax.swing.JButton) update.getDateOfBirth().getButton()).addActionListener(this);
+        
         update.setVisible(true);
     }
 
@@ -295,6 +302,9 @@ public class ControllerImplementation implements IController, ActionListener {
                 update.getDateOfBirth().setEnabled(true);
                 update.getPhoto().setEnabled(true);
                 update.getUpdate().setEnabled(true);
+                
+                update.getDateOfBirth().setEnabled(true);
+                
                 update.getNam().setText(pNew.getName());
                 if (pNew.getDateOfBirth() != null) {
                     Calendar calendar = Calendar.getInstance();

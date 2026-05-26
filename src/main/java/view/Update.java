@@ -33,7 +33,14 @@ public class Update extends javax.swing.JDialog {
         DropTarget dropTarget = new DropTarget(photo, d);
         read.setVisible(false);
         update.setEnabled(false);
+
+        //Solución #4 
+        //Cambiamos el boton para que: salga Seleccionar una fecha 
+        javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
+        btnCalendario.setText("Seleccionar una fecha");
     }
+    
+    
 
     public JButton getUpdate() {
         return update;

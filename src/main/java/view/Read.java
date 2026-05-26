@@ -27,7 +27,14 @@ public class Read extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         read.setVisible(false);
+
+        //Solución #4 
+        //Cambiamos el boton para que: salga Seleccionar una fecha 
+        javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
+        btnCalendario.setText("Seleccionar una fecha");
     }
+    
+        
 
     public JButton getRead() {
         return read;
