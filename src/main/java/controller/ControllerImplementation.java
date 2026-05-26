@@ -63,6 +63,7 @@ public class ControllerImplementation implements IController, ActionListener {
     //campo LOGIN
     private Login login;
 
+    private String rol;
     /**
      * This constructor allows the controller to know which data storage option
      * the user has chosen.Schedule an event to deploy when the user has made
@@ -97,18 +98,31 @@ public class ControllerImplementation implements IController, ActionListener {
         } else if (login != null && e.getSource() == login.getLoginButton()) {
             // Compruebo si el boton LOGIN ha sido pulsado
             // Si el usuario es admin y la contraseña es admin123 -> login correcto
-            if (login.getUsername().equals("admin") && login.getPassword().equals("admin123")) {
-                // Muestro el dialogo de login exitoso
-                javax.swing.JOptionPane.showMessageDialog(
-                        login,
-                        "Login successful.",
-                        "Login - People v1.1.0",
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE
-                );
-                // Cierro el login y abro el menu principal
-                login.dispose();
-                setupMenu();
-            } else {
+        if (login.getUsername().equals("admin") && login.getPassword().equals("admin123")) {
+            rol = "ADMIN";
+            
+            JOptionPane.showMessageDialog(
+                    login,
+                    "Login successful as ADMIN.",
+                    "Login - People v1.1.0",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            login.dispose();
+            setupMenu();
+
+        } else if (login.getUsername().equals("employee") && login.getPassword().equals("employee123")) {
+            rol = "EMPLOYEE";
+
+            JOptionPane.showMessageDialog(
+                    login,
+                    "Login successful as EMPLOYEE.",
+                    "Login - People v1.1.0",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            login.dispose();
+            setupMenu();
+        } else {
                 // Si son incorrectos muestro el mensaje de error en rojo
                 login.showError("Invalid username or password.");
             }
@@ -254,14 +268,33 @@ public class ControllerImplementation implements IController, ActionListener {
     private void setupMenu() {
         menu = new Menu();
         menu.setVisible(true);
-        menu.getInsert().addActionListener(this);
-        menu.getRead().addActionListener(this);
-        menu.getUpdate().addActionListener(this);
-        menu.getDelete().addActionListener(this);
-        menu.getReadAll().addActionListener(this);
-        menu.getDeleteAll().addActionListener(this);
-    }
+        
+    if (rol.equals("ADMIN")) {
 
+        menu.getInsert().setEnabled(true);
+        menu.getUpdate().setEnabled(true);
+        menu.getDelete().setEnabled(true);
+        menu.getDeleteAll().setEnabled(true);
+
+    } else if (rol.equals("EMPLOYEE")) {
+
+        menu.getInsert().setVisible(false);
+        menu.getUpdate().setVisible(false);
+        menu.getDelete().setVisible(false);
+        menu.getDeleteAll().setVisible(false);
+    }
+    
+        menu.setVisible(true);
+
+    menu.getInsert().addActionListener(this);
+    menu.getRead().addActionListener(this);
+    menu.getUpdate().addActionListener(this);
+    menu.getDelete().addActionListener(this);
+    menu.getReadAll().addActionListener(this);
+    menu.getDeleteAll().addActionListener(this);
+    }   
+    
+    
     private void handleInsertAction() {
         insert = new Insert(menu, true);
         insert.getInsert().addActionListener(this);
