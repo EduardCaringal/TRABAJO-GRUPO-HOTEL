@@ -579,6 +579,7 @@ public class ControllerImplementation implements IController, ActionListener {
      */
     @Override
     public void deleteAll() {
+        
         try {
             dao.deleteAll();
         } catch (Exception ex) {
