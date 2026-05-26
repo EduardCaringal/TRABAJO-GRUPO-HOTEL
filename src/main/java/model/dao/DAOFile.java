@@ -2,7 +2,6 @@ package model.dao;
 
 import model.entity.Person;
 import start.Routes;
-
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -21,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.imageio.ImageIO;
-
-
 import javax.swing.ImageIcon;
 
 /**

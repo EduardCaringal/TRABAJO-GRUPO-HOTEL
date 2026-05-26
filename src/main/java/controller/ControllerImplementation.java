@@ -436,6 +436,7 @@ public class ControllerImplementation implements IController, ActionListener {
         try {
             if (dao.read(p) == null) {
                 dao.insert(p);
+                JOptionPane.showMessageDialog(insert, "Person inserted successfully!", insert.getTitle(),JOptionPane.INFORMATION_MESSAGE );
             } else {
                 throw new PersonException(p.getNif() + " is registered and can not "
                         + "be INSERTED.");
@@ -489,7 +490,11 @@ public class ControllerImplementation implements IController, ActionListener {
     public void delete(Person p) {
         try {
             if (dao.read(p) != null) {
-                dao.delete(p);
+                int opc = JOptionPane.showConfirmDialog(delete, "Are you sure you want to delete this person?");
+                if(opc == javax.swing.JOptionPane.YES_NO_OPTION){
+                    dao.delete(p);
+                JOptionPane.showMessageDialog(delete, "Person deleted successfully!" , delete.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
                 throw new PersonException(p.getNif() + " is not registered and can not "
                         + "be DELETED");
