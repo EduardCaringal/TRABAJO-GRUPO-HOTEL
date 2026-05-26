@@ -61,6 +61,7 @@ public class Update extends javax.swing.JDialog {
 
     public JButton getReset() {
         return reset;
+        
     }
 
     /**
