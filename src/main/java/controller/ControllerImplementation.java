@@ -271,10 +271,10 @@ public class ControllerImplementation implements IController, ActionListener {
         
     if (rol.equals("ADMIN")) {
 
-        menu.getInsert().setEnabled(true);
-        menu.getUpdate().setEnabled(true);
-        menu.getDelete().setEnabled(true);
-        menu.getDeleteAll().setEnabled(true);
+        menu.getInsert().setVisible(true);
+        menu.getUpdate().setVisible(true);
+        menu.getDelete().setVisible(true);
+        menu.getDeleteAll().setVisible(true);
 
     } else if (rol.equals("EMPLOYEE")) {
 
