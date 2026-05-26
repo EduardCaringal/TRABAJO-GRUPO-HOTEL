@@ -35,6 +35,7 @@ import javax.persistence.*;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.jdatepicker.DateModel;
 import utils.Constants;
@@ -138,6 +139,8 @@ public class ControllerImplementation implements IController, ActionListener {
             handleReadAll();
         } else if (menu != null && e.getSource() == menu.getDeleteAll()) {
             handleDeleteAll();
+        } else if (readAll != null && e.getSource() == readAll.getExportData()) { 
+            handleExportCSV();
         }
     }
 
@@ -383,6 +386,10 @@ public class ControllerImplementation implements IController, ActionListener {
             JOptionPane.showMessageDialog(menu, "There are not people registered yet.", "Read All - People v1.1.0", JOptionPane.WARNING_MESSAGE);
         } else {
             readAll = new ReadAll(menu, true);
+            
+            //para enlazar el boton
+            readAll.getExportData().addActionListener(this);
+            
             DefaultTableModel model = (DefaultTableModel) readAll.getTable().getModel();
             for (int i = 0; i < s.size(); i++) {
                 model.addRow(new Object[i]);
@@ -586,4 +593,59 @@ public class ControllerImplementation implements IController, ActionListener {
         
     }
 
+    private void handleExportCSV() {
+        if (readAll == null) return;
+
+        //para tener la fecha actual para el archivo 
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd");
+        String currentDateStr = java.time.LocalDate.now().format(formatter);
+        String defaultFileName = "people_data_" + currentDateStr + ".csv";
+
+        //la ventana para guardar el archivo 
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Guardar archivo CSV");
+        fileChooser.setSelectedFile(new File(defaultFileName));
+
+        int userSelection = fileChooser.showSaveDialog(readAll);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            
+            //si el usuario no escribe la extencion que pide, que se ponga automaticamente
+            if (!fileToSave.getName().toLowerCase().endsWith(".csv")) {
+                fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".csv");
+            }
+
+            //recopilamos todos los datos para hacer el archivo 
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(fileToSave)) {
+                JTable table = readAll.getTable();
+                
+                //Las cosas que hay en la tabla: NIF, name, date of birth y photo.
+                pw.println("NIF,Name,Date of Birth,Photo");
+
+                //remorremos todas las filas de la tabla
+                int rowCount = table.getRowCount();
+                for (int i = 0; i < rowCount; i++) {
+                    String nifValue = (table.getValueAt(i, 0) != null) ? table.getValueAt(i, 0).toString() : "";
+                    String nameValue = (table.getValueAt(i, 1) != null) ? table.getValueAt(i, 1).toString() : "";
+                    String dateValue = (table.getValueAt(i, 2) != null) ? table.getValueAt(i, 2).toString() : "";
+                    String photoValue = (table.getValueAt(i, 3) != null) ? table.getValueAt(i, 3).toString() : "";
+
+                    //para que se escriba la linea en el archivo
+                    pw.println(nifValue + "," + nameValue + "," + dateValue + "," + photoValue);
+                }
+                
+                JOptionPane.showMessageDialog(
+                    readAll, 
+                    "Datos exportados con éxito como " + fileToSave.getName(), 
+                    "Exportación exitosa", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(readAll, "Error al guardar el archivo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
 }

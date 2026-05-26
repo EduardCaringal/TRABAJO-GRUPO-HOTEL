@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 /**
  * Interface used to delete a person. It is mandatory to enter the NIF.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -22,12 +23,32 @@ public class Delete extends javax.swing.JDialog {
 
     /**
      * Creates new form StudentDelete
+     *
      * @param parent
      * @param modal
      */
     public Delete(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //esto es lo del PLACEHOLDER mejorado#3
+        nif.setForeground(java.awt.Color.GRAY); //poner el color en gris
+        nif.setText("e.g., 12345678"); //mensaje que aprece dentro del placeholder
+        nif.addFocusListener(new java.awt.event.FocusAdapter() { //Esto sirva para que detecte cuando hagan click dentro o fuera
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (nif.getText().equals("e.g., 12345678")) {
+                    nif.setText(""); // setea 
+                    nif.setForeground(java.awt.Color.BLACK); //lo vuelve color negro porque ya son los datos que pondra el usuario
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (nif.getText().isEmpty()) {
+                    nif.setText("e.g., 12345678");
+                    nif.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
         setLocationRelativeTo(null);
     }
 
@@ -42,7 +63,7 @@ public class Delete extends javax.swing.JDialog {
     public JButton getReset() {
         return reset;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,7 +176,7 @@ public class Delete extends javax.swing.JDialog {
             delete.setEnabled(true);
         }
     }//GEN-LAST:event_nifKeyPressed
-   
+
     private void nifKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nifKeyReleased
         if (nif.getText().length() == 8) {
             nif.setText(calculateNifLetter(nif.getText()));
@@ -180,7 +201,6 @@ public class Delete extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton delete;

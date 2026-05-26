@@ -17,9 +17,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
+
 /**
- * Interface used to register a person. It is mandatory to enter at least the 
+ * Interface used to register a person. It is mandatory to enter at least the
  * NIF and the name.
+ *
  * @author Francesc Perez
  * @version 1.1.0
  */
@@ -28,19 +30,57 @@ public class Insert extends javax.swing.JDialog {
     public Insert(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
+        //esto es lo del PLACEHOLDER mejorado#3
+        nif.setForeground(java.awt.Color.GRAY); //poner el color en gris
+        nif.setText("e.g., 12345678"); //mensaje que aprece dentro del placeholder
+        nif.addFocusListener(new java.awt.event.FocusAdapter() { //Esto sirva para que detecte cuando hagan click dentro o fuera
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (nif.getText().equals("e.g., 12345678")) {
+                    nif.setText(""); // setea 
+                    nif.setForeground(java.awt.Color.BLACK); //lo vuelve color negro porque ya son los datos que pondra el usuario
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (nif.getText().isEmpty()) {
+                    nif.setText("e.g., 12345678");
+                    nif.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
+        //Aplico lo mismo para el name 
+        name.setForeground(java.awt.Color.GRAY);
+        name.setText("Enter full name");
+        name.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (name.getText().equals("Enter full name")) {
+                    name.setText("");
+                    name.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (name.getText().isEmpty()) {
+                    name.setText("Enter full name");
+                    name.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
         //esto es del #1
         photo.setText("<html><center>Deja tu archivo aquí</center><br><center>PHOTO</center><br><center><i>Supported format: PNG.</i></center><br><center><i>Max. size 64KB</i></center></html>");
-        
+
         //Solución #4 
         //Cambiamos el boton para que: salga Seleccionar una fecha 
-        javax.swing.JButton btnCalendario=(javax.swing.JButton) dateOfBirth.getButton();
+        javax.swing.JButton btnCalendario = (javax.swing.JButton) dateOfBirth.getButton();
         btnCalendario.setText("Seleccionar una fecha");
-        
+
         //El tamaño, quitamos los limites que hay puestos 
         btnCalendario.setMaximumSize(null);
-        btnCalendario.setPreferredSize(null);       
-        
+        btnCalendario.setPreferredSize(null);
+
         DropPhotoListener d = new DropPhotoListener(photo, this);
         DropTarget dropTarget = new DropTarget(photo, d);
         insert.setEnabled(false);
@@ -283,7 +323,7 @@ public class Insert extends javax.swing.JDialog {
         dateModel.setValue(calendar);
         //... but do not display it in the JDatePicker box
         dateOfBirth.getModel().setValue(null);
-        
+
         insert.setEnabled(false);
     }//GEN-LAST:event_resetActionPerformed
 
