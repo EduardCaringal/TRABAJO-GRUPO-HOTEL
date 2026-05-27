@@ -21,6 +21,8 @@ public class Person implements Serializable{
     private String nif;
     private String name;
     private Date dateOfBirth;
+    //añadimos este nuevo
+    private String postalCode;
     @Transient
     private ImageIcon photo;
     @Lob
@@ -61,6 +63,7 @@ public class Person implements Serializable{
         this.name = name;      
         this.nif = nif;
         this.dateOfBirth = dateOfBirth;
+        this.postalCode = postalCode; 
         this.photo = photo;
     }
 
@@ -87,6 +90,14 @@ public class Person implements Serializable{
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+    
+    public String getPostalCode() {
+        return postalCode;
+    }
+    
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public ImageIcon getPhoto() {

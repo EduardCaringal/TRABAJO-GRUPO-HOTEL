@@ -215,7 +215,8 @@ public class ControllerImplementation implements IController, ActionListener {
                         + "nif varchar(9) primary key not null, "
                         + "name varchar(50), "
                         + "dateOfBirth DATE, "
-                        + "photo varchar(200) );");
+                        + "photo varchar(200), "
+                        + "postalCode varchar(10));");
                 stmt.close();
                 conn.close();
             }
@@ -273,6 +274,20 @@ public class ControllerImplementation implements IController, ActionListener {
     }
 
     private void handleInsertPerson() {
+        
+        String cp = insert.getPostalCode().getText().trim();
+        
+        //valida lo del regex
+        if (!utils.DataValidation.isValidPostalCode(cp)) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    insert, 
+                    "Formato de código postal inválido. Debe ser de 5 dígitos (ej. 08013) o de 9.", 
+                    "Error de validación", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            return; 
+        }
+        
         Person p = new Person(insert.getNam().getText(), insert.getNif().getText());
         if (insert.getDateOfBirth().getModel().getValue() != null) {
             p.setDateOfBirth(((GregorianCalendar) insert.getDateOfBirth().getModel().getValue()).getTime());
