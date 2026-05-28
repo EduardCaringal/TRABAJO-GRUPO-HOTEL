@@ -1,5 +1,5 @@
 package controller;
-
+import static utils.DataValidation.isValidPhoneNumber;
 import model.entity.Person;
 import model.entity.PersonException;
 import model.dao.DAOArrayList;
@@ -305,8 +305,14 @@ public class ControllerImplementation implements IController, ActionListener {
         insert.setVisible(true);
     }
 
-    private void handleInsertPerson() {
-        Person p = new Person(insert.getNam().getText(), insert.getNif().getText());
+   private void handleInsertPerson() {
+    String phoneNumber = insert.getPhoneNumber().getText();
+    if (!phoneNumber.isEmpty() && !isValidPhoneNumber(phoneNumber)) {
+        JOptionPane.showMessageDialog(insert, "Invalid phone number format.", insert.getTitle(), JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    Person p = new Person(insert.getNam().getText(), insert.getNif().getText());
+    p.setPhoneNumber(phoneNumber);
         if (insert.getDateOfBirth().getModel().getValue() != null) {
             p.setDateOfBirth(((GregorianCalendar) insert.getDateOfBirth().getModel().getValue()).getTime());
         }
@@ -398,6 +404,11 @@ public class ControllerImplementation implements IController, ActionListener {
     public void handleUpdatePerson() {
         if (update != null) {
             Person p = new Person(update.getNam().getText(), update.getNif().getText());
+            String phoneNumber = update.getPhoneNumber().getText();
+if (!phoneNumber.isEmpty() && !isValidPhoneNumber(phoneNumber)) {
+    JOptionPane.showMessageDialog(update, "Invalid phone number format.", update.getTitle(), JOptionPane.ERROR_MESSAGE);
+    return;}
+p.setPhoneNumber(phoneNumber);
             if ((update.getDateOfBirth().getModel().getValue()) != null) {
                 p.setDateOfBirth(((GregorianCalendar) update.getDateOfBirth().getModel().getValue()).getTime());
             }

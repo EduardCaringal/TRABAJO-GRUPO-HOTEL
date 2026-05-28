@@ -26,5 +26,8 @@ public class DataValidation {
             "N","J","Z","S","Q","V","H","L","C","K","E"};
         return nifNoLetter + letter[Integer.parseInt(nifNoLetter)%23];
     }
-
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+    String phoneRegex = "^\\+?[0-9]{1,4}?[-.\\s]?(\\d{1,3})?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$";
+    return phoneNumber.matches(phoneRegex);
+}
 }

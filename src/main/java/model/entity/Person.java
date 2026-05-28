@@ -21,6 +21,7 @@ public class Person implements Serializable{
     private String nif;
     private String name;
     private Date dateOfBirth;
+    private String PhoneNumber;
     @Transient
     private ImageIcon photo;
     @Lob
@@ -87,6 +88,14 @@ public class Person implements Serializable{
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
     }
 
     public ImageIcon getPhoto() {
